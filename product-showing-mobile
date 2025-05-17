@@ -1,0 +1,348 @@
+import React, { useState, useEffect } from 'react';
+import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
+
+const ProductCategorySlider = () => {
+  // Product category data structure
+  const categories = [
+    {
+      id: 1,
+      name: "PEMBERSIH KACA",
+      url: "https://www.rawatmobilku.id/produk/pembersih-kaca",
+      products: [
+        {
+          id: 1.1,
+          name: "GLASS UV PROTECTION",
+          description: "Lindungi Kaca Mobil dari Sinar UV dan Panas Matahari",
+          price: 43900,
+          image: "/api/placeholder/400/400",
+          url: "https://www.rawatmobilku.id/produk/pembersih-kaca/glass-uv",
+          rating: 5,
+          volume: "250 ml"
+        },
+        {
+          id: 1.2,
+          name: "GLASS SHINE PRO CLEANER",
+          description: "Bersihkan Kaca Mobil dengan Kilau Maksimal",
+          price: 38500,
+          image: "/api/placeholder/400/400",
+          url: "https://www.rawatmobilku.id/produk/pembersih-kaca/glass-shine",
+          rating: 5,
+          volume: "250 ml"
+        },
+        {
+          id: 1.3,
+          name: "WATERSPOT REMOVER",
+          description: "Hilangkan Bercak Air pada Kaca dengan Mudah",
+          price: 45000,
+          image: "/api/placeholder/400/400",
+          url: "https://www.rawatmobilku.id/produk/pembersih-kaca/waterspot",
+          rating: 5,
+          volume: "250 ml"
+        }
+      ]
+    },
+    {
+      id: 2,
+      name: "PERAWATAN INTERIOR",
+      url: "https://www.rawatmobilku.id/produk/perawatan-interior",
+      products: [
+        {
+          id: 2.1,
+          name: "INTERIOR CLEANER",
+          description: "Bersihkan Interior Mobil dengan Sempurna",
+          price: 51200,
+          image: "/api/placeholder/400/400",
+          url: "https://www.rawatmobilku.id/produk/perawatan-interior/interior-cleaner",
+          rating: 5,
+          volume: "250 ml"
+        },
+        {
+          id: 2.2,
+          name: "LEATHER CLEANER",
+          description: "Perawatan Khusus untuk Jok Kulit",
+          price: 63500,
+          image: "/api/placeholder/400/400",
+          url: "https://www.rawatmobilku.id/produk/perawatan-interior/leather-cleaner",
+          rating: 5,
+          volume: "250 ml"
+        }
+      ]
+    },
+    {
+      id: 3,
+      name: "PERAWATAN EKSTERIOR",
+      url: "https://www.rawatmobilku.id/produk/perawatan-eksterior",
+      products: [
+        {
+          id: 3.1,
+          name: "BACK TO BLACK",
+          description: "Kembalikan Warna Hitam pada Trim Eksterior",
+          price: 58000,
+          image: "/api/placeholder/400/400",
+          url: "https://www.rawatmobilku.id/produk/perawatan-eksterior/back-to-black",
+          rating: 5,
+          volume: "250 ml"
+        },
+        {
+          id: 3.2,
+          name: "TAR REMOVER",
+          description: "Hilangkan Aspal dan Getah pada Body Mobil",
+          price: 62000,
+          image: "/api/placeholder/400/400",
+          url: "https://www.rawatmobilku.id/produk/perawatan-eksterior/tar-remover",
+          rating: 5,
+          volume: "250 ml"
+        }
+      ]
+    },
+    {
+      id: 4,
+      name: "COATING",
+      url: "https://www.rawatmobilku.id/produk/coating",
+      products: [
+        {
+          id: 4.1,
+          name: "PERFECT COATING",
+          description: "Perlindungan Maksimal untuk Cat Mobil",
+          price: 145000,
+          image: "/api/placeholder/400/400",
+          url: "https://www.rawatmobilku.id/produk/coating/perfect-coating",
+          rating: 5,
+          volume: "250 ml"
+        }
+      ]
+    },
+    {
+      id: 5,
+      name: "CUCI MOBIL",
+      url: "https://www.rawatmobilku.id/produk/cuci-mobil",
+      products: [
+        {
+          id: 5.1,
+          name: "WATERLESS CAR WASH",
+          description: "Cuci Mobil Tanpa Air, Praktis dan Cepat",
+          price: 78000,
+          image: "/api/placeholder/400/400",
+          url: "https://www.rawatmobilku.id/produk/cuci-mobil/waterless",
+          rating: 5,
+          volume: "250 ml"
+        }
+      ]
+    },
+    {
+      id: 6,
+      name: "RAT REPELLENT",
+      url: "https://www.rawatmobilku.id/produk/rat-repellent",
+      products: [
+        {
+          id: 6.1,
+          name: "MOUSE NO MORE",
+          description: "Cegah Tikus Masuk dan Merusak Mobil",
+          price: 85000,
+          image: "/api/placeholder/400/400",
+          url: "https://www.rawatmobilku.id/produk/rat-repellent/mouse-no-more",
+          rating: 5,
+          volume: "250 ml"
+        }
+      ]
+    }
+  ];
+
+  // State for tracking current category and product
+  const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
+  const [currentProductIndex, setCurrentProductIndex] = useState(0);
+
+  // Reset product index when category changes
+  useEffect(() => {
+    setCurrentProductIndex(0);
+  }, [currentCategoryIndex]);
+
+  // Navigate to previous category
+  const prevCategory = () => {
+    setCurrentCategoryIndex((prevIndex) => 
+      prevIndex === 0 ? categories.length - 1 : prevIndex - 1
+    );
+  };
+
+  // Navigate to next category
+  const nextCategory = () => {
+    setCurrentCategoryIndex((prevIndex) => 
+      prevIndex === categories.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  // Navigate to previous product within current category
+  const prevProduct = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const productsLength = currentCategory.products.length;
+    if (productsLength > 1) {
+      setCurrentProductIndex((prevIndex) => 
+        prevIndex === 0 ? productsLength - 1 : prevIndex - 1
+      );
+    }
+  };
+
+  // Navigate to next product within current category
+  const nextProduct = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const productsLength = currentCategory.products.length;
+    if (productsLength > 1) {
+      setCurrentProductIndex((prevIndex) => 
+        prevIndex === productsLength - 1 ? 0 : prevIndex + 1
+      );
+    }
+  };
+
+  // Navigate to specific product within current category
+  const goToProduct = (index) => {
+    setCurrentProductIndex(index);
+  };
+
+  // Current category and product
+  const currentCategory = categories[currentCategoryIndex];
+  const currentProduct = currentCategory.products[currentProductIndex];
+
+  // Format price to Indonesian Rupiah
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat('id-ID').format(price);
+  };
+
+  // Render star rating
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 0; i < 5; i++) {
+      stars.push(
+        <Star 
+          key={i} 
+          size={14} 
+          className={i < rating ? "text-yellow-400 fill-yellow-400" : "text-gray-300"} 
+        />
+      );
+    }
+    return stars;
+  };
+
+  return (
+    <div className="max-w-sm mx-auto bg-gray-100 rounded-lg overflow-hidden shadow-md">
+      {/* Category header with navigation */}
+      <div className="bg-gray-200 p-3 flex items-center justify-between">
+        <button 
+          onClick={prevCategory}
+          className="text-blue-600 hover:text-blue-800"
+          aria-label="Previous category"
+        >
+          <ChevronLeft size={24} />
+        </button>
+        
+        <a 
+          href={currentCategory.url}
+          className="text-lg font-bold text-center flex-1"
+        >
+          {currentCategory.name}
+        </a>
+        
+        <button 
+          onClick={nextCategory}
+          className="text-blue-600 hover:text-blue-800"
+          aria-label="Next category"
+        >
+          <ChevronRight size={24} />
+        </button>
+      </div>
+      
+      {/* Product details card */}
+      <a 
+        href={currentProduct.url}
+        className="block relative bg-white"
+      >
+        {/* Logo */}
+        <div className="absolute top-4 left-4 z-10">
+          <img 
+            src="/api/placeholder/100/30" 
+            alt="RawatMobilku Logo" 
+            className="h-6"
+          />
+        </div>
+
+        {/* Product navigation arrows - only show if category has multiple products */}
+        {currentCategory.products.length > 1 && (
+          <>
+            <button 
+              onClick={prevProduct}
+              className="absolute left-2 top-1/3 z-10 bg-white rounded-full p-1 shadow-md"
+              aria-label="Previous product"
+            >
+              <ChevronLeft size={20} className="text-gray-600" />
+            </button>
+            <button 
+              onClick={nextProduct}
+              className="absolute right-2 top-1/3 z-10 bg-white rounded-full p-1 shadow-md"
+              aria-label="Next product"
+            >
+              <ChevronRight size={20} className="text-gray-600" />
+            </button>
+          </>
+        )}
+        
+        {/* Product image */}
+        <div className="relative">
+          <div className="relative pb-0 bg-white pt-12">
+            <img 
+              src={currentProduct.image} 
+              alt={currentProduct.name}
+              className="w-full object-contain h-64"
+            />
+            <div className="absolute bottom-2 left-2 bg-purple-600 text-white text-xs px-2 py-1 rounded">
+              {currentProduct.volume}
+            </div>
+          </div>
+        </div>
+        
+        {/* Product info */}
+        <div className="p-4">
+          <h3 className="text-xl font-bold">{currentProduct.name}</h3>
+          <p className="text-sm text-gray-700 mt-1">{currentProduct.description}</p>
+          
+          {/* Price and Rating */}
+          <div className="mt-3 flex justify-between items-center">
+            <div className="text-lg font-bold text-blue-600">
+              IDR {formatPrice(currentProduct.price)}
+            </div>
+            <div className="flex">
+              {renderStars(currentProduct.rating)}
+            </div>
+          </div>
+          
+          {/* Separator line */}
+          <div className="mt-4 border-t border-gray-200"></div>
+          
+          {/* CTA */}
+          <div className="mt-3 flex justify-end items-center">
+            <span className="text-sm font-medium">LIHAT SELENGKAPNYA</span>
+            <ChevronRight size={16} className="ml-1" />
+          </div>
+        </div>
+      </a>
+      
+      {/* Pagination dots - only show if category has multiple products */}
+      {currentCategory.products.length > 1 && (
+        <div className="py-3 flex justify-center space-x-2">
+          {currentCategory.products.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToProduct(index)}
+              className={`w-2 h-2 rounded-full ${
+                index === currentProductIndex ? 'bg-black' : 'bg-gray-300'
+              }`}
+              aria-label={`Go to product ${index + 1}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ProductCategorySlider;
