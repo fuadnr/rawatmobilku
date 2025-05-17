@@ -41,16 +41,7 @@
       display: block;
     }
     
-    .overlay-text {
-      position: absolute;
-      bottom: 20px;
-      left: 0;
-      background: rgba(0,0,0,0.7);
-      color: white;
-      padding: 8px 16px;
-      font-weight: bold;
-      font-size: 18px;
-    }
+    /* Overlay text removed as requested */
     
     .thumbnails {
       display: flex;
@@ -152,7 +143,7 @@
       <!-- Main content (image or video) will be loaded here by JavaScript -->
       <div id="main-content-container"></div>
       
-      <div class="overlay-text">MENGKILAP</div>
+      <!-- Overlay text removed as requested -->
     </div>
     
     <div class="thumbnails" id="thumbnails-container">
